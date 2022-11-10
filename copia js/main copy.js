@@ -117,11 +117,54 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
                 //Ogni cella  contiene ha un numero progressivo, da 1 a totalCells_Number
              cell_El.append(i + 1); */
         console.log(cellClickcounter);
-        /* devo aggiungere l'evento __________________________________________________________________________________________________________________fallimento*/
-      /*   cell_El.addEventListener("click", function () { */
+        /* devo aggiungere l'evento __________________________________________________________fallimento*/
+        cell_El.addEventListener("click", function () {
 
 
-      
+            console.log(cellClickcounter);
+
+            //se il valore convertito in numero (+) del dataset.Cell assegnato all'elemento cliccato è incluso nell'elenco delle bombe
+            if (bombs.includes(+this.dataset.Cell)) {
+
+
+                console.log("è una bomba");
+
+                //creo un'immagine
+                const bomb_El = document.createElement("img");
+                //con una gif anuimata di una bomba che esplode come src
+                bomb_El.src = "/img/bomb.gif";
+                bomb_El.alt = "bomb";
+                //la inserisco all'interno della cella esplosa
+                this.append(bomb_El);
+                //diventa active perchè voglio che cambi background come le altre
+                this.classList.add("active");
+                //ma aggiungo la classe bomb come disclaimer.
+                this.classList.add("bomb");
+
+
+                alert("è una bomba!!");
+                let score = cellClickcounter
+                console.log("score", score);
+
+                return (score);
+
+
+            } else {
+                console.log("NON è una bomba");
+                //se non è una bomba il contatore delle celle viene decrementato
+                cellClickcounter--
+
+                console.log(cellClickcounter);
+                this.classList.add("active");
+
+                if (cellClickcounter === 0) {
+                    let score = cellClickcounter
+                    return (score)
+                }
+
+            }
+            /*  alert(score); */
+        });
 
 
 
@@ -251,61 +294,9 @@ function checkElement() {
 
 
 
-/******* *************************************************/
-
-
-
-
-
 /* bombs = generateArrayOfRandomNumber(1,5 ,16 );
 console.log("bombs", bombs)
  */
 /* correzioni */
 
 //correzione allinterno della funzione genera griglia, cell.addevent listner scatena la funzione controllo se bomba
-
-/* 
-console.log(cellClickcounter);
-
-//se il valore convertito in numero (+) del dataset.Cell assegnato all'elemento cliccato è incluso nell'elenco delle bombe
-if (bombs.includes(+this.dataset.Cell)) {
-
-
-    console.log("è una bomba");
-
-    //creo un'immagine
-    const bomb_El = document.createElement("img");
-    //con una gif anuimata di una bomba che esplode come src
-    bomb_El.src = "/img/bomb.gif";
-    bomb_El.alt = "bomb";
-    //la inserisco all'interno della cella esplosa
-    this.append(bomb_El);
-    //diventa active perchè voglio che cambi background come le altre
-    this.classList.add("active");
-    //ma aggiungo la classe bomb come disclaimer.
-    this.classList.add("bomb");
-
-
-    alert("è una bomba!!");
-    let score = cellClickcounter
-    console.log("score", score);
-
-    return (score);
-
-
-} else {
-    console.log("NON è una bomba");
-    //se non è una bomba il contatore delle celle viene decrementato
-    cellClickcounter--
-
-    console.log(cellClickcounter);
-    this.classList.add("active");
-
-    if (cellClickcounter === 0) {
-        let score = cellClickcounter
-        return (score)
-    }
-
-}
-/*  alert(score); */
-/* }); */ 

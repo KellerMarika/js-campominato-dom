@@ -71,10 +71,22 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
+
 .cell.active {
     background-image: url(/img/cell-click-bg.jpg);
     background-size: cover;
     border: none
+}
+
+.bomb {
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+}
+
+.bomb img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
