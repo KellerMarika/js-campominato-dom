@@ -173,30 +173,33 @@ function randomNumberOfRange(minNumber, maxNumber) {
  * @return 
  */
 
-function generateArrayOfRandomNumber(minNumber, maxNumber, arrayLenghtNumber) {
+function generateArrayOfRandomNumber( minNumber, maxNumber,arrayLenghtNumber) {
 
     //creo un array indefinito
-    let array = []
-    console.log(array)
+    const array = []
+    console.log(array);
     //comincio un ciclo while che si arresta solo quando avrà finito di reare un array di lunghezza ="arrayLenghtNumber" composto da numeri unici
 
-    while (array.length === arrayLenghtNumber) {
+    while (array.length < arrayLenghtNumber) {
         //richiamo la funzione random number che dovrebbe prendere i valori dagli argomenti
         const randomNumber = randomNumberOfRange(minNumber, maxNumber);
+        console.log(randomNumber);
 
         //perchè venga inserito nell'array devo controllare di non aver già inserito un numero identico nei cicli precedenti
 
-        if(!array.includes(randomNumber)){
+        //se non è incluso nell'array includilo
+        if (!array.includes(randomNumber)) {
             array.push(randomNumber);
         }
-
+        return array;
     }
-
-
 }
-let mammolo = generateArrayOfRandomNumber(1, 100, 16);
+
+let mammolo = generateArrayOfRandomNumber(1,100,16);
 console.log(mammolo)
-console.log(randomNumberOfRange);
+
+/* console.log(randomNumberOfRange); */
+
 /* cosa devo fare? */
 //funzione generica genera tot numeri casuali e li racchiude in un array
 //f generate random number array (minNumber, maxNumber, resultArray.lenghtNumber)
