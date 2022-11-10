@@ -1,0 +1,81 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    color: rgba(104, 104, 104, 0.856);
+    ;
+}
+
+#main-container {
+    margin-top: 100px;
+    text-align: center;
+    background-color: #bdbdbd;
+
+}
+
+/* utilities ***************************/
+.title {
+    padding-top: 40px;
+    padding-bottom: 30px;
+    font-size: 60px;
+    color: rgb(255, 255, 255);
+    text-shadow: -3px 3px rgb(148, 138, 138);
+}
+
+.my_b-outset {
+    border: 10px outset #e9e6e6;
+}
+
+.my_b-inset {
+    border: 10px inset #e9e6e6;
+}
+
+
+.my_input {
+    border: 5px inset #e9e6e6;
+    background-color: #bdbdbd;
+}
+
+.my_btn {
+    color: rgb(77, 71, 71);
+    font-weight: bold;
+    padding: 5px 10px;
+    border: 3px outset transparent;
+    background-color: #bdbdbd;
+}
+
+.my_btn:hover {
+    color: rgb(77, 71, 71);
+    border: 3px outset #e9e6e6;
+    background-color: #bdbdbd;
+}
+
+.my_btn:active,
+.my_btn:focus {
+    color: rgb(255, 255, 255);
+    border: 3px inset #e9e6e6;
+    background-color: rgba(104, 104, 104, 0.58);
+}
+
+/***** GRID **********************************************/
+
+[class*="grid-cells-"] {
+    background-image: url(/img/grid-bg.jfif);
+    margin-bottom: 100px;
+    position: relative;
+}
+
+[class*="cell-"] {
+    border: 5px outset #d5d5d5c9;
+    z-index: 2;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+[class*="cell-"].active {
+    background-image: url(/img/cell-click-bg.jpg);
+    background-size: cover;
+    border: none
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- indispensabile per far funzionare le media-queries -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>CAMPOFIORITO</title>
+
+
+    <!-- font-family: 'Roboto', sans-serif; -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- font-family: fontawesome -->
+    <script src="https://kit.fontawesome.com/a19b158346.js" crossorigin="anonymous"></script>
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <!-- my-css -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style-media.css">
+</head>
+
+<body>
+
+
+    <section>
+        <div id="main-container" class="container my_b-outset">
+            <div class="row justify-content-center">
+                <!-- titolo -->
+                <h1 class="title">CAMPOFIORITO! <i class="fa-solid fa-bomb"></i></h1>
+
+                <div class="col-11 my_b-inset mb-5 px-5 py-3">
+                    
+                    <form action="get">
+                        <h5 class="text-start">vuoi complicarti la vita?</h5>
+                        <div class="input-group mt-3 my_input">
+                            
+                            <!-- selec valori 10 9 7 -->
+                            <select class="custom-select border-0 flex-grow-1 " id="select-levels">
+                                <option selected> Scegli tra i seguenti livelli di difficoltà:</option>
+                                <option value="10">Facile - come bere un bicchiere d'acqua!</option>
+                                <option value="9">Medio - qualche ostia, ma niente di chè...</option>
+                                <option value="7">Impegnativo - "Mamma! devo comprare un pc nuovo!"</option>
+                            </select>
+                       <!--      btn btn-outline-secondary  -->
+                            <!-- button play -->
+                            <button id="play-btn" class=" my_btn fs-5" type="button">Gioca!</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- contenitore dove si genera la griglia -->
+                <div class="col-10">
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- qua creo il mio contenitore -->
+        </div>
+    </section>
+
+
+
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
