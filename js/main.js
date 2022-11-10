@@ -47,10 +47,14 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
     const grid_El = document.createElement("div");
     //console.log(grid_El);
 
+    /* reset */
+    grid_El.classList.add("d-none");
+
     //classe nominale parlante: ti dice già quante celle porta per riga (come bootstrap row-cols-x)
     const grid_ElName = `grid-cells-${rowCells_Number}`;
 
     grid_El.classList.add(grid_ElName);
+
     //aggiungo la classe d-flex perchè funzioni correttamente il flexbasis degli elementi figli
 
     //in questo modo ho pieno controllo sul corretto funzionamento della struttura che andrò a creare, perchè noin dipende da elementi esterni
@@ -83,17 +87,23 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
         console.log(cell_El);
 
         //creo classe nominale per cel el
-        const cell_ElName = `cell-${i + 1}`
+        const cell_ElName = `cell`
         //ggiungo la classe cell-ElName all'elemento creato sopra cell_El
         cell_El.classList.add(cell_ElName);
 
+
+        //la prossima volta utilizzo il dataset per avere un riferimento numerico privato degli elementi creati
+        cell_El.dataset.Cell = i + 1
         //ora determino le dimensioni dell'elemento grazie ad un calcolo basato sul primo argomento fornito alla funzione. poi lo assegno dando uno style inlinea ad ogni elemento:
         //calc = 100% (larghezza container) / (diviso) rowCells_Number (numero di celle volute per riga)
 
         //le proprietà in js sono tradotte da kebab-case a camel-case
         cell_El.style.flexBasis = `calc(100% / ${rowCells_Number}`;
-        //Ogni cella  contiene ha un numero progressivo, da 1 a totalCells_Number
-        cell_El.append(i + 1);
+
+
+        /*rimozxione dal progetto
+                //Ogni cella  contiene ha un numero progressivo, da 1 a totalCells_Number
+             cell_El.append(i + 1); */
 
         /* devo aggiungere l'evento */
         cell_El.addEventListener("click", function () {
@@ -110,6 +120,10 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
         //adesso stampo la cel sull'html. 
         //ad ogni ciclo ne innesto una nella grid che abbiamo innestato nel container 
         grid_El.append(cell_El);
+
+        //solo alla fine la griglia così completata diventa visibile
+        grid_El.classList.remove("d-none");
+
         i++
     }
     console.log(this, "this in generateGrid");
@@ -131,32 +145,58 @@ play_Btn.addEventListener("click", function () {
     }
 });
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                    PARTE 2                                                                   //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* 
-Consegna
-Copiamo la griglia fatta ieri nella nuova repo e aggiungiamo la logica del gioco (attenzione: non bisogna copiare tutta la cartella dell’esercizio ma solo l’index.html, e le cartelle js/ css/ con i relativi script e fogli di stile, per evitare problemi con l’inizializzazione di git).
-Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. Attenzione: nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.
-In seguito l’utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina. Altrimenti la cella cliccata si colora di azzurro e l’utente può continuare a cliccare sulle altre celle.
-La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
-Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
-BONUS:
-Aggiungere una select accanto al bottone di generazione, che fornisca una scelta tra tre diversi livelli di difficoltà:
-- difficoltà 1 ⇒ 100 caselle, con un numero compreso tra 1 e 100, divise in 10 caselle per 10 righe;
-- difficoltà 2 ⇒ 81 caselle, con un numero compreso tra 1 e 81, divise in 9 caselle per 9 righe;
-- difficoltà 3 ⇒ 49 caselle, con un numero compreso tra 1 e 49, divise in 7 caselle per 7 righe;
-SUPER-BONUS:
-Quando si clicca su una bomba e finisce la partita, evitare che si possa cliccare su altre celle.
-Quando si clicca su una bomba e finisce la partita, il software scopre tutte le bombe nascoste.
+
+
+/************* FUNZIONE GENERA NUMERI RANDOM *****************/
+/**
+ * esegue un'estrazione casuale di un numero intero compreso fra i valori passati per argomenti(compresi anchessi)
+ * 
+ * @param {number} minNumber è il valore minimo del range entro il quale si desidera estrarre il numero dalla funzione
+ * @param {number} maxNumber è il valore massimo del range entro il quale si desidera estrarre il numero dalla funzione
+ * @returns il valore di returns è compreso fra i valori minNumber e maxNumber  minNumber <=returns <=maxNumber
+ */
+function randomNumberOfRange(minNumber, maxNumber) {
+    return Math.floor(Math.random() * (maxNumber - minNumber + 1) + minNumber)
+}
+
+/************* FUNZIONE GENERA array di numeri random *****************/
+
+/**
+ * 
+ * @param {number} minNumber valore numerico più basso che si accetta nell'array 
+ * @param {number} maxNumber valore numerico più alto che si accetta nell'array 
+ * @param {number} arrayLenghtNumber numero di elementi di cui si desidera comporre l'array
+ * @return 
  */
 
-/* correzioni */
-//sostituire  classe nominale con dataset
-//fix possibile errore caricamento con d-none alla creazione della griglia e rimozione alla fine
-//rimuovo numerazione interna
-//correzione allinterno della funzione genera griglia, cell.addevent listner scatena la funzione controllo se bomba
+function generateArrayOfRandomNumber(minNumber, maxNumber, arrayLenghtNumber) {
+
+    //creo un array indefinito
+    let array = []
+    console.log(array)
+    //comincio un ciclo while che si arresta solo quando avrà finito di reare un array di lunghezza ="arrayLenghtNumber" composto da numeri unici
+
+    while (array.length === arrayLenghtNumber) {
+        //richiamo la funzione random number che dovrebbe prendere i valori dagli argomenti
+        const randomNumber = randomNumberOfRange(minNumber, maxNumber);
+
+        //perchè venga inserito nell'array devo controllare di non aver già inserito un numero identico nei cicli precedenti
+
+        if(!array.includes(randomNumber)){
+            array.push(randomNumber);
+        }
+
+    }
 
 
-
+}
+let mammolo = generateArrayOfRandomNumber(1, 100, 16);
+console.log(mammolo)
+console.log(randomNumberOfRange);
 /* cosa devo fare? */
 //funzione generica genera tot numeri casuali e li racchiude in un array
 //f generate random number array (minNumber, maxNumber, resultArray.lenghtNumber)
@@ -174,3 +214,8 @@ Quando si clicca su una bomba e finisce la partita, il software scopre tutte le 
 
 
 
+
+
+/* correzioni */
+
+//correzione allinterno della funzione genera griglia, cell.addevent listner scatena la funzione controllo se bomba

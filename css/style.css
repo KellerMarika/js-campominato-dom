@@ -64,7 +64,7 @@ body {
     position: relative;
 }
 
-[class*="cell-"] {
+.cell {
     border: 5px outset #d5d5d5c9;
     z-index: 2;
     aspect-ratio: 1/1;
@@ -73,8 +73,7 @@ body {
     align-items: center;
 
 }
-
-[class*="cell-"].active {
+.cell.active {
     background-image: url(/img/cell-click-bg.jpg);
     background-size: cover;
     border: none
