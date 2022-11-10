@@ -173,7 +173,9 @@ function randomNumberOfRange(minNumber, maxNumber) {
  * @return 
  */
 
-function generateArrayOfRandomNumber( minNumber, maxNumber,arrayLenghtNumber) {
+function generateArrayOfRandomNumber(minNumber, maxNumber, arrayLenghtNumber) {
+
+    console.log(minNumber, maxNumber, arrayLenghtNumber);
 
     //creo un array indefinito
     const array = []
@@ -191,11 +193,11 @@ function generateArrayOfRandomNumber( minNumber, maxNumber,arrayLenghtNumber) {
         if (!array.includes(randomNumber)) {
             array.push(randomNumber);
         }
-        return array;
     }
+    return array;
 }
 
-let mammolo = generateArrayOfRandomNumber(1,100,16);
+let mammolo = generateArrayOfRandomNumber(1, 100, 16);
 console.log(mammolo)
 
 /* console.log(randomNumberOfRange); */
