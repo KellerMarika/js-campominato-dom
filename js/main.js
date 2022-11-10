@@ -80,7 +80,7 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
     //______________________________________________________controllo sulla validità del numero inserito
     //numero totale delle celle che mi servono
     const totalCells_Number = Math.pow(rowCells_Number, 2);
-   // console.log("totalCells_Number", totalCells_Number);
+    // console.log("totalCells_Number", totalCells_Number);
 
     //ciclo di creazione (perchè non while?)
     //finchè i non è uguale al numero di celle totali da creare
@@ -120,8 +120,14 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
             //per mezzo di ciò sarà possibile  attribuire a tutte le cell del ciclo delle proprietà dinamiche 
 
             //ora per tutte le mie celle, se clicco diventano azzurre________________________________anche classe personalizzata
-            this.classList.add("active");
 
+            if (bombs.includes(+this.dataset.Cell)) {
+                console.log("è una bomba");
+            } else {
+                console.log("NON è una bomba");
+
+                this.classList.add("active");
+            }
         });
 
         //adesso stampo la cel sull'html. 
