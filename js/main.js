@@ -41,7 +41,7 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
     //Rilevazione contenitore 
     //creo una variabile che ha al suo interno l'elemento che ha per selettore css il valore espresso nel secondo argomento della funzione
     const container_El = document.querySelector(container_SelectorCSS);
-    console.log("container_El", container_El);
+    //console.log("container_El", container_El);
 
     //______________________________________________________controllo sulla validità dell'elemento
 
@@ -80,13 +80,13 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
     //______________________________________________________controllo sulla validità del numero inserito
     //numero totale delle celle che mi servono
     const totalCells_Number = Math.pow(rowCells_Number, 2);
-    console.log("totalCells_Number", totalCells_Number);
+   // console.log("totalCells_Number", totalCells_Number);
 
     //ciclo di creazione (perchè non while?)
     //finchè i non è uguale al numero di celle totali da creare
     i = 0
     while (i < totalCells_Number) {
-        console.log(i);
+        //console.log(i);
 
         //create piuttosto di innerHTML perchè così posso aggiungere degli eventi relativi all'elemento creato
         //creo la singola cella
@@ -133,7 +133,7 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
 
         i++
     }
-    console.log(this, "this in generateGrid");
+    //console.log(this, "this in generateGrid");
 }
 
 
@@ -143,17 +143,21 @@ play_Btn.addEventListener("click", function () {
 
     //+  converte in numero un valore (si usa al posto di parseInt
     const userLevelChoice = parseInt(level_input.value)
-    console.log(userLevelChoice);
+    //console.log(userLevelChoice);
 
     if (isNaN(userLevelChoice)) {
-        alert("Effettua una scelta!")
+        alert("Effettua una scelta!");
     } else {
 
         //ogni volta che clicco il bottone, la posizione delle bombe deve cambiare e deve essere assegnata dinamicamente in base al numero di caselle scelto dall'utente, per questo lo facciamo dentro al play-button
 
         //assegno alla variabile indefinita bomb il valore della funzione generatearrayofrandomNumber , che è appunto un array di numeri casuali con lenght=16(bombsNumber)
-        /*   bombs = generateArrayOfRandomNumber(1,userLevelChoice,bombsNumber);
-          console.log( "bombs",bombs); */
+
+        const totalCells_Number = Math.pow(+userLevelChoice, 2);
+
+        bombs = generateArrayOfRandomNumber(1, totalCells_Number, bombsNumber);
+        console.log("bombs", bombs);
+
 
 
         generateGrid(userLevelChoice, ".col-10");
@@ -174,7 +178,7 @@ play_Btn.addEventListener("click", function () {
  * @returns il valore di returns è compreso fra i valori minNumber e maxNumber  minNumber <=returns <=maxNumber
  */
 function randomNumberOfRange(minNumber, maxNumber) {
-    return Math.floor(Math.random() * (maxNumber - minNumber + 1) + minNumber)
+    return Math.floor(Math.random() * (maxNumber - minNumber + 1) + minNumber);
 }
 
 /************* FUNZIONE GENERA array di numeri random *****************/
@@ -189,11 +193,11 @@ function randomNumberOfRange(minNumber, maxNumber) {
 
 function generateArrayOfRandomNumber(minNumber, maxNumber, arrayLenghtNumber) {
 
-    console.log(minNumber, maxNumber, arrayLenghtNumber);
+    //console.log(minNumber, maxNumber, arrayLenghtNumber);
 
     //creo un array indefinito
     const array = []
-    console.log(array);
+    //console.log(array);
     //comincio un ciclo while che si arresta solo quando avrà finito di reare un array di lunghezza ="arrayLenghtNumber" composto da numeri unici
 
     while (array.length < arrayLenghtNumber) {
@@ -210,15 +214,7 @@ function generateArrayOfRandomNumber(minNumber, maxNumber, arrayLenghtNumber) {
     }
     return array;
 }
-/*  bombs = generateArrayOfRandomNumber(1, 100, 16);
-console.log("bombs", bombs) */
-/* generateArrayOfRandomNumber(1,5,bombsNumber); */
-/* console.log(generateArrayOfRandomNumber); */
 
-
- console.log(generateArrayOfRandomNumber(1,10,3)); 
- console.log(generateArrayOfRandomNumber(1,10,bombsNumber)); 
-/* cosa devo fare? */
 
 
 //dentro al play button che genera la griglia in base al valore della select raccolto:
