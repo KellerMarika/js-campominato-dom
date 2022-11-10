@@ -117,8 +117,13 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
                 //Ogni cella  contiene ha un numero progressivo, da 1 a totalCells_Number
              cell_El.append(i + 1); */
         console.log(cellClickcounter);
-        /* devo aggiungere l'evento __________________________________________________________________________________________________________________fallimento*/
-      /*   cell_El.addEventListener("click", function () { */
+        /* devo aggiungere l'evento 
+        
+        c
+        __________________________________________________________________________________________________________________fallimento*/
+
+        const numerettoFantasia= this.dataset.Cell
+         cell_El.addEventListener("click", checkElement( numerettoFantasia,bombs)); 
 
 
       
@@ -262,9 +267,33 @@ function checkElement(n,array){
 
 let arrayesempio=[1,2,3,4,5,6];
 
+ /* checkElement(7,arrayesempio);
+console.log("esempio array 7", checkElement(7,arrayesempio));   */
 
-checkElement(7,arrayesempio);
-console.log("esempio array 7", checkElement(7,arrayesempio));
+ const contenitoreEsempio=document.createElement("div");
+
+contenitoreEsempio.dataset.conenitore=0;
+console.log(contenitoreEsempio);
+
+for(i=0; i<10; i++){
+
+    const elementoFiglioEsempio=document.createElement("div");
+
+    elementoFiglioEsempio.dataset.figlio=              i+1;
+        console.log( i ,"figlio", elementoFiglioEsempio);
+
+        
+elementoFiglioEsempio.addEventListener("click", checkElement(elementoFiglioEsempio.dataset.figlio, arrayesempio));
+
+
+
+
+
+    contenitoreEsempio.append(elementoFiglioEsempio);
+
+    const contenitoreEsempio_El= document.querySelector(".esempio");
+    contenitoreEsempio_El.append(contenitoreEsempio);
+} 
 
 /* bombs = generateArrayOfRandomNumber(1,5 ,16 );
 console.log("bombs", bombs)
