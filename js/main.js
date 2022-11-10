@@ -113,22 +113,14 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
              cell_El.append(i + 1); */
 
         /* devo aggiungere l'evento */
-        cell_El.addEventListener("click", function () {
+        cell_El.addEventListener("click",checkElement(+this.dataset.Cell,bombs));
 
-            //con this, faccio riferimento all'elemento scatenante della funzione in cui è locato(this)
-            //uin questo caso si riferisce a cell_El.
-            //per mezzo di ciò sarà possibile  attribuire a tutte le cell del ciclo delle proprietà dinamiche 
+        //con this, faccio riferimento all'elemento scatenante della funzione in cui è locato(this)
+        //uin questo caso si riferisce a cell_El.
+        //per mezzo di ciò sarà possibile  attribuire a tutte le cell del ciclo delle proprietà dinamiche 
 
-            //ora per tutte le mie celle, se clicco diventano azzurre________________________________anche classe personalizzata
+        //ora per tutte le mie celle, se clicco diventano azzurre________________________________anche classe personalizzata         
 
-            if (bombs.includes(+this.dataset.Cell)) {
-                console.log("è una bomba");
-            } else {
-                console.log("NON è una bomba");
-
-                this.classList.add("active");
-            }
-        });
 
         //adesso stampo la cel sull'html. 
         //ad ogni ciclo ne innesto una nella grid che abbiamo innestato nel container 
@@ -223,6 +215,29 @@ function generateArrayOfRandomNumber(minNumber, maxNumber, arrayLenghtNumber) {
 
 
 
+
+/******** FONZIONE CHECK **********************************************/
+
+
+
+function checkElement(elementNumber,array) {
+
+    if (array.includes(elementNumber)) {
+        console.log("è una bomba");
+    } else {
+        console.log("NON è una bomba");
+    }
+}
+
+
+/*
+if (bombs.includes(+this.dataset.Cell)) {
+    console.log("è una bomba");
+} else {
+    console.log("NON è una bomba");
+
+    this.classList.add("active");
+} */
 //dentro al play button che genera la griglia in base al valore della select raccolto:
 ///assegno il risultato della funzione all'array globale undefined bombe bombs_list = generate random number array (1, totalCells_Number, 16);
 //funzione generica find element (array da controllare(bombs))
