@@ -3,15 +3,22 @@
 /************* ELEMENTI *****************/
 //bottone da cui genero la griglia
 const play_Btn = document.getElementById("play-btn");
-console.log(play_Btn);
+//console.log(play_Btn);
 
 //select da cui recupero i valori della funzione generateGrid al play btn click
 const level_input = document.querySelector("select");
-console.log(level_input);
+//console.log(level_input);
 
 
 /************* VARIABILI ****************/
+/**Array delle bombe
+ * il suo valore lo recuper dalla funzione generateArrayOfRandomNumbers
+ * e lo assegno al click sul playbutton 
+ */
+let bombs
 
+//numero di bombe necessarie per giocare
+const bombsNumber = 16
 
 //const level_input.value________in play btn click f
 
@@ -79,12 +86,12 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
     //finchè i non è uguale al numero di celle totali da creare
     i = 0
     while (i < totalCells_Number) {
-        console.log(i)
+        console.log(i);
 
         //create piuttosto di innerHTML perchè così posso aggiungere degli eventi relativi all'elemento creato
         //creo la singola cella
         const cell_El = document.createElement("div");
-        console.log(cell_El);
+        //console.log(cell_El);
 
         //creo classe nominale per cel el
         const cell_ElName = `cell`
@@ -134,13 +141,21 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
 
 play_Btn.addEventListener("click", function () {
 
-
+    //+  converte in numero un valore (si usa al posto di parseInt
     const userLevelChoice = parseInt(level_input.value)
     console.log(userLevelChoice);
 
     if (isNaN(userLevelChoice)) {
         alert("Effettua una scelta!")
     } else {
+
+        //ogni volta che clicco il bottone, la posizione delle bombe deve cambiare e deve essere assegnata dinamicamente in base al numero di caselle scelto dall'utente, per questo lo facciamo dentro al play-button
+
+        //assegno alla variabile indefinita bomb il valore della funzione generatearrayofrandomNumber , che è appunto un array di numeri casuali con lenght=16(bombsNumber)
+        /*   bombs = generateArrayOfRandomNumber(1,userLevelChoice,bombsNumber);
+          console.log( "bombs",bombs); */
+
+
         generateGrid(userLevelChoice, ".col-10");
     }
 });
@@ -148,7 +163,6 @@ play_Btn.addEventListener("click", function () {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                    PARTE 2                                                                   //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 
 /************* FUNZIONE GENERA NUMERI RANDOM *****************/
@@ -185,7 +199,7 @@ function generateArrayOfRandomNumber(minNumber, maxNumber, arrayLenghtNumber) {
     while (array.length < arrayLenghtNumber) {
         //richiamo la funzione random number che dovrebbe prendere i valori dagli argomenti
         const randomNumber = randomNumberOfRange(minNumber, maxNumber);
-        console.log(randomNumber);
+        //console.log(randomNumber);
 
         //perchè venga inserito nell'array devo controllare di non aver già inserito un numero identico nei cicli precedenti
 
@@ -196,15 +210,17 @@ function generateArrayOfRandomNumber(minNumber, maxNumber, arrayLenghtNumber) {
     }
     return array;
 }
+/*  bombs = generateArrayOfRandomNumber(1, 100, 16);
+console.log("bombs", bombs) */
+/* generateArrayOfRandomNumber(1,5,bombsNumber); */
+/* console.log(generateArrayOfRandomNumber); */
 
-let mammolo = generateArrayOfRandomNumber(1, 100, 16);
-console.log(mammolo)
 
-/* console.log(randomNumberOfRange); */
-
+ console.log(generateArrayOfRandomNumber(1,10,3)); 
+ console.log(generateArrayOfRandomNumber(1,10,bombsNumber)); 
 /* cosa devo fare? */
-//funzione generica genera tot numeri casuali e li racchiude in un array
-//f generate random number array (minNumber, maxNumber, resultArray.lenghtNumber)
+
+
 //dentro al play button che genera la griglia in base al valore della select raccolto:
 ///assegno il risultato della funzione all'array globale undefined bombe bombs_list = generate random number array (1, totalCells_Number, 16);
 //funzione generica find element (array da controllare(bombs))
@@ -220,7 +236,9 @@ console.log(mammolo)
 
 
 
-
+/* bombs = generateArrayOfRandomNumber(1,5 ,16 );
+console.log("bombs", bombs)
+ */
 /* correzioni */
 
 //correzione allinterno della funzione genera griglia, cell.addevent listner scatena la funzione controllo se bomba
