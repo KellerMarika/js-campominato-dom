@@ -251,11 +251,20 @@ function checkElement() {
 
 
 
-/******* *************************************************/
+/******* CHECK ELEMENT FUNCTION ************************************************/
+
+function checkElement(n,array){
+
+    if(array.includes(n)){
+        return true
+    }else{return false}
+}
+
+let arrayesempio=[1,2,3,4,5,6];
 
 
-
-
+checkElement(7,arrayesempio);
+console.log("esempio array 7", checkElement(7,arrayesempio));
 
 /* bombs = generateArrayOfRandomNumber(1,5 ,16 );
 console.log("bombs", bombs)
