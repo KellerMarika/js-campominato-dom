@@ -11,6 +11,10 @@ const level_input = document.querySelector("select");
 
 
 /************* VARIABILI ****************/
+
+//dichiaro 2 array vuoti che riempirò in seguito
+let cellClickcounter = 0
+
 /**Array delle bombe
  * il suo valore lo recuper dalla funzione generateArrayOfRandomNumbers
  * e lo assegno al click sul playbutton 
@@ -19,6 +23,14 @@ let bombs
 
 //numero di bombe necessarie per giocare
 const bombsNumber = 16
+/* 
+let goodCells = []
+
+let boombCells = []
+
+let allCells = []
+ */
+
 
 //const level_input.value________in play btn click f
 
@@ -47,6 +59,7 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
 
     /* reset iniziale */
     container_El.innerHTML = ""
+
 
 
     /* Cosa: */
@@ -82,14 +95,15 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
     const totalCells_Number = Math.pow(rowCells_Number, 2);
     // console.log("totalCells_Number", totalCells_Number);
 
+    let maxScore = totalCells_Number - bombs.length
     //numero di celle che lutente deve cliccare per vincere il gioco
-    let cellClickcounter = totalCells_Number - bombsNumber
+
+    /* (totalCells_Number - bombsNumber) */
     //console.log(cellClickcounter);
-
-
-    //ciclo di creazione (perchè non while?)
-    //finchè i non è uguale al numero di celle totali da creare
-    i = 0
+    let score = /* (totalCells_Number - bombsNumber) */
+        //ciclo di creazione (perchè non while?)
+        //finchè i non è uguale al numero di celle totali da creare
+        i = 0
     while (i < totalCells_Number) {
         //console.log(i);
 
@@ -104,6 +118,7 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
         cell_El.classList.add(cell_ElName);
 
 
+
         //la prossima volta utilizzo il dataset per avere un riferimento numerico privato degli elementi creati
         cell_El.dataset.Cell = i + 1
         //ora determino le dimensioni dell'elemento grazie ad un calcolo basato sul primo argomento fornito alla funzione. poi lo assegno dando uno style inlinea ad ogni elemento:
@@ -116,26 +131,48 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
         /*rimozxione dal progetto
                 //Ogni cella  contiene ha un numero progressivo, da 1 a totalCells_Number
              cell_El.append(i + 1); */
-        console.log(cellClickcounter);
+
+
+
 
         /******* AGGIUNGO L'EVENTO CHECK************************/
 
         /* INVOCARE UNA FUNZIONE CHE DICHIARO ALL'ESTERNO ALLEGGERISCE IL CODICE (LE FUNZIONI VENGONO RACCOLTE E ANALIZZATE PRIMA DAL SISTEMA, ASSIEME ALLE VARIABILI*/
-        /* ____________________________________________________________________________________________________________NON VA LO STESSSO DEVO CHIEDERE */
-        cell_El.addEventListener("click", checkElement ());/* { //_______________________________________________________________________
+        /* ____________________________________________________________________________________________________________NON VA LO STESSSO DEVO CHIEDERE 
+        cell_El.addEventListener("click", checkElement ()); { _______________________________________________________________________*/
+        /*        cell_El.addEventListener("click", function (){ */
+
+        //finchè non ho scorso tutto l'elenco delle celle
+        //controllo se bombs ha degli elementi in comune  con 
+
+        /*     }); */
 
 
+        cell_El.addEventListener("click", function checkBombs() {
 
-        cell_El.addEventListener("click", function () {
+            /* creo un contenitore per il punteggio */
+            const scoreContainer_El = document.createElement("div");
+            scoreContainer_El.classList.add("score-container");
+            scoreContainer_El.classList.add("my_b-outset");
+            //visibile solo a partita conclusa
+            scoreContainer_El.classList.add("d-none");
 
-            console.log(cellClickcounter);
+            //a cui appendo un titolo
+            const scoreTitle_El = document.createElement("h2");
+            scoreTitle_El.classList.add("title");
+            scoreContainer_El.append(scoreTitle_El);
+            container_El.append(scoreContainer_El);
+
+            //e un commento
+            const scorePoint_El = document.createElement("h2");
+            scorePoint_El.classList.add("scorepoint");
+            scoreContainer_El.append(scorePoint_El);
+            container_El.append(scoreContainer_El);
+
 
             //se il valore convertito in numero (+) del dataset.Cell assegnato all'elemento cliccato è incluso nell'elenco delle bombe
             if (bombs.includes(+this.dataset.Cell)) {
-
-
                 console.log("è una bomba");
-
                 //creo un'immagine
                 const bomb_El = document.createElement("img");
                 //con una gif anuimata di una bomba che esplode come src
@@ -147,32 +184,34 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
                 this.classList.add("active");
                 //ma aggiungo la classe bomb come disclaimer.
                 this.classList.add("bomb");
-
-
-                alert("è una bomba!!");
                 let score = cellClickcounter
-                console.log("score", score);
 
-                return (score);
+                scoreTitle_El.innerText = "BOMBA!!!"
+                scorePoint_El.innerHTML = `Hai perso, punteggio: ${cellClickcounter} / ${totalCells_Number - bombsNumber}`
 
-
+                scoreContainer_El.classList.remove("d-none");
+                //return score
+                
             } else {
                 console.log("NON è una bomba");
                 //se non è una bomba il contatore delle celle viene decrementato
-                cellClickcounter--
+                cellClickcounter++
 
                 console.log(cellClickcounter);
                 this.classList.add("active");
 
-                if (cellClickcounter === 0) {
+                if (cellClickcounter === maxScore) {
                     let score = cellClickcounter
-                    return (score)
+
+                    scoreTitle_El.innerText = "COMPLETATO!!"
+                    scorePoint_El.innerHTML = `Hai VINTO! punteggio: ${cellClickcounter} / ${totalCells_Number - bombsNumber}`
+
+                    scoreContainer_El.classList.remove("d-none");
+                    //return score
                 }
             }
-            /*  alert(score); */
-     /*    }); */
- 
-
+        });
+        console.log("score", score);
 
 
         //adesso stampo la cel sull'html. 
@@ -184,8 +223,9 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
 
         i++
     }
-    //console.log(this, "this in generateGrid");
 }
+
+
 
 
 /*** PLAY BTN *******************************/
@@ -219,10 +259,8 @@ play_Btn.addEventListener("click", function () {
 //                                                    PARTE 2                                                                   //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+/* 
 function checkElement() {
-
-   /*  console.log(cellClickcounter); */
 
     //se il valore convertito in numero (+) del dataset.Cell assegnato all'elemento cliccato è incluso nell'elenco delle bombe
     if (bombs.includes(+this.dataset.Cell)) {
@@ -253,7 +291,7 @@ function checkElement() {
 
 
 
-
+ */
 
 /************* FUNZIONE GENERA NUMERI RANDOM *****************/
 /**

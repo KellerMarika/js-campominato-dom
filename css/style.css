@@ -21,6 +21,11 @@ body {
     text-shadow: -3px 3px rgb(148, 138, 138);
 }
 
+h2.title{
+    padding-top: 20px;
+    padding-bottom: 5px;
+}
+
 .my_b-outset {
     border: 10px outset #e9e6e6;
 }
@@ -91,7 +96,13 @@ body {
     height: 100%;
 }
 
-.esempio *{
-    padding: 20px;
-    border: 2px solid red;
+.score-container {
+    position: absolute;
+    background-color: #bdbdbd;
+    z-index: 5;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 580px;
+    width: 500px;
+    height: 10%;
 }
