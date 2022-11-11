@@ -25,7 +25,7 @@ let bombs
 const bombsNumber = 16
 
 
-let AllDataCells = [];
+let allCells = [];
 
 let boombCells = []
 
@@ -115,17 +115,12 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
 
         //creo classe nominale per cel el
         const cell_ElName = "cell"
-        const cell_number=i+1
+     
         //ggiungo la classe cell-ElName all'elemento creato sopra cell_El
         cell_El.classList.add(cell_ElName);
-        cell_El.classList.add(cell_number);
-
+      
         cell_El.dataset.Cell = i + 1
-        //array di tutte le data cell
-
-
-
-
+      
         //la prossima volta utilizzo il dataset per avere un riferimento numerico privato degli elementi creati
 
         //ora determino le dimensioni dell'elemento grazie ad un calcolo basato sul primo argomento fornito alla funzione. poi lo assegno dando uno style inlinea ad ogni elemento:
