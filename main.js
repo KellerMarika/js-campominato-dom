@@ -76,7 +76,7 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
         const cell_ElName = "cell"
         //ggiungo la classe cell-ElName all'elemento creato sopra cell_El
         cell_El.classList.add(cell_ElName);
-        cell_El.dataset.cell =i+1
+        cell_El.dataset.cell = i + 1
 
         //ora determino le dimensioni dell'elemento grazie ad un calcolo basato sul primo argomento fornito alla funzione. poi lo assegno dando uno style inlinea ad ogni elemento:
         //calc = 100% (larghezza container) / (diviso) rowCells_Number (numero di celle volute per riga)
@@ -90,7 +90,6 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
         /* INVOCARE UNA FUNZIONE CHE DICHIARO ALL'ESTERNO ALLEGGERISCE IL CODICE (LE FUNZIONI VENGONO RACCOLTE E ANALIZZATE PRIMA DAL SISTEMA, ASSIEME ALLE VARIABILI*/
 
         cell_El.addEventListener("click", checkElement);
-
         //adesso stampo la cel sull'html. 
         grid_El.append(cell_El);
         //solo alla fine la griglia così completata diventa visibile
@@ -125,31 +124,13 @@ play_Btn.addEventListener("click", function () {
 
         /* invoco la funzione genera griglia */
         generateGrid(userLevelChoice, ".col-10");
-        /* creo una variabile e le assegno il valore di una funzione che crea un elemento html (punteggio) */
-        scoreContainer_El = generateScoreContainer();
-        /* la tampo sull'html */
-        container_El.append(scoreContainer_El);
-        //console.log(container_El);
-        //console.log(generateScoreContainer());
         return bombs
     }
 });
 
 function checkElement() {
     if (bombs.includes(+this.dataset.cell)) {
-        console.log("si");
-        return true
-    } else {
-        console.log("no");
-        return false
-    }
-}
 
-
-
-/* 
-    //se il valore convertito in numero (+) del dataset.Cell assegnato all'elemento cliccato è incluso nell'elenco delle bombe
-    if (bombs.includes(+this.dataset.Cell)) {
         console.log("è una bomba");
         //creo un'immagine
         const bomb_El = document.createElement("img");
@@ -188,87 +169,22 @@ function checkElement() {
             //return score
         }
     }
+
+    scoreContainer_El = createElement("div", "score-container", "d-none");
+    console.log(scoreContainer_El);
+    scoreTitle_El = createElement("h2", "score-title", "result");
+    console.log(scoreTitle_El);
+    scoreValue_El = createElement("p", "score-subtitle", "percentage-value");
+    console.log(scoreValue_El);
+
+
+    /* creo una variabile e le assegno il valore di una funzione che crea un elemento html (punteggio) */
+    //  scoreContainer_El = generateScoreContainer(); __________________________________________*/
+    /* la tampo sull'html */
+    // container_El.append(scoreContainer_El);___________________________________________
+    //console.log(container_El);
+    //console.log(generateScoreContainer());
 }
-
- */
-/* 
-function checkElement() {
-
-    //se il valore convertito in numero (+) del dataset.Cell assegnato all'elemento cliccato è incluso nell'elenco delle bombe
-    if (bombs.includes(+this.dataset.Cell)) {
-        console.log(bombs);
-        console.log(this.dataset.Cell, "this.dataset");
-
-        console.log("è una bomba");
-        //creo un'immagine
-        const bomb_El = document.createElement("img");
-        //con una gif anuimata di una bomba che esplode come src
-        bomb_El.src = "/img/bomb.gif";
-        bomb_El.alt = "bomb";
-        //la inserisco all'interno della cella esplosa
-        this.append(bomb_El);
-        //diventa active perchè voglio che cambi background come le altre
-        this.classList.add("active");
-        //ma aggiungo la classe bomb come disclaimer.
-        this.classList.add("bomb");
-
-        // let score = cellClickcounter 
-
-        scoreTitle_El.innerText = "BOMBA!!!"
-        scorePoint_El.innerHTML = `Hai perso, punteggio: ${cellClickcounter} / ${totalCells_Number - bombsNumber}`
-
-        scoreContainer_El.classList.remove("d-none");
-        //return score
-
-    } else {
-        console.log("NON è una bomba");
-        //se non è una bomba il contatore delle celle viene decrementato
-        cellClickcounter++
-
-        console.log(cellClickcounter, "counter");
-        this.classList.add("active");
-
-        if (cellClickcounter === maxScore) {
-            let score = cellClickcounter
-
-            scoreTitle_El.innerText = "COMPLETATO!!"
-            scorePoint_El.innerHTML = `Hai VINTO! punteggio: ${cellClickcounter} / ${totalCells_Number - bombsNumber}`
-
-            scoreContainer_El.classList.remove("d-none");
-            //return score
-        }
-    }
-}
-
- function checkElement() {
-    //se il valore convertito in numero (+) del dataset.Cell assegnato all'elemento cliccato è incluso nell'elenco delle bombe
-    if (bombs.includes(+this.dataset.Cell)) {
-        console.log("è una bomba");
-
-        //creo un'immagine
-        const bomb_El = document.createElement("img");
-        //con una gif anuimata di una bomba che esplode come src
-        bomb_El.src = "/img/bomb.gif";
-        bomb_El.alt = "bomb";
-        //la inserisco all'interno della cella esplosa
-        this.append(bomb_El);
-        //diventa active perchè voglio che cambi background come le altre
-        this.classList.add("active");
-        //ma aggiungo la classe bomb come disclaimer.
-        this.classList.add("bomb");
-
-        alert("è una bomba!!");
-        console.log("score", score);
-
-
-    } else {
-        console.log("NON è una bomba");
-        //se non è una bomba il contatore delle celle viene decrementato
-        this.classList.add("active");
-    }
-} 
-
- */
 
 /************* FUNZIONE GENERA NUMERI RANDOM *****************/
 /**
@@ -314,32 +230,26 @@ function generateArrayOfRandomNumber(minNumber, maxNumber, arrayLenghtNumber) {
     return array;
 }
 
-/**** FUNZIONE CREA CONTENITORE PUNTEGGIO  *************************************/
+/**** FUNZIONE GENERICA CREAZIONE ELEMENTO  *************************************/
+/**createElement
+ * 
+ * @param {string} tagEl deve contenere un tag html valido, es:"div","span","hn","p","section" ecc..
+ * @param {string} class1 deve essere una stringa con "" che racchiude una classe priva di spazi
+ * @param {string} class2 deve essere una stringa con "" che racchiude una classe priva di spazi
+ * @returns crea un elemento di tipo tagEl con due classi. è imperativo che le classi da aggiungere all'elemento siano 2
+ */
+function createElement(tagEl, class1, class2) {
 
-function generateScoreContainer() {
-    // creo un contenitore per il punteggio 
-    const scoreContainer_El = document.createElement("div");
-    scoreContainer_El.classList.add("score-container");
-    scoreContainer_El.classList.add("my_b-outset");
-    //visibile solo a partita conclusa
-    /*     scoreContainer_El.classList.add("d-none"); */
-
-    //a cui appendo un titolo
-    const scoreTitle_El = document.createElement("h2");
-    scoreTitle_El.classList.add("title");
-    scoreContainer_El.append(scoreTitle_El);
-
-
-    //e un commento
-    const scorePoint_El = document.createElement("h2");
-    scorePoint_El.classList.add("scorepoint");
-    scoreContainer_El.append(scorePoint_El);
-
-
-    //console.log("scoreContainer_El",scoreContainer_El);
-    return scoreContainer_El
+    const created_El = document.createElement(tagEl);
+    created_El.classList.add(class1);
+    created_El.classList.add(class2);
+    return created_El
 }
-//console.log(generateScoreContainer());
+
+
+
+
+
 
 
 
