@@ -23,13 +23,14 @@ let bombs
 
 //numero di bombe necessarie per giocare
 const bombsNumber = 16
-/* 
-let goodCells = []
+
+
+let AllDataCells = [];
 
 let boombCells = []
 
-let allCells = []
- */
+let goodCells = []
+
 
 
 //const level_input.value________in play btn click f
@@ -110,17 +111,23 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
         //create piuttosto di innerHTML perchè così posso aggiungere degli eventi relativi all'elemento creato
         //creo la singola cella
         const cell_El = document.createElement("div");
-        //console.log(cell_El);
+        console.log(cell_El);
 
         //creo classe nominale per cel el
-        const cell_ElName = `cell`
+        const cell_ElName = "cell"
+        const cell_number=i+1
         //ggiungo la classe cell-ElName all'elemento creato sopra cell_El
         cell_El.classList.add(cell_ElName);
+        cell_El.classList.add(cell_number);
+
+        cell_El.dataset.Cell = i + 1
+        //array di tutte le data cell
+
 
 
 
         //la prossima volta utilizzo il dataset per avere un riferimento numerico privato degli elementi creati
-        cell_El.dataset.Cell = i + 1
+
         //ora determino le dimensioni dell'elemento grazie ad un calcolo basato sul primo argomento fornito alla funzione. poi lo assegno dando uno style inlinea ad ogni elemento:
         //calc = 100% (larghezza container) / (diviso) rowCells_Number (numero di celle volute per riga)
 
@@ -191,7 +198,7 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
 
                 scoreContainer_El.classList.remove("d-none");
                 //return score
-                
+
             } else {
                 console.log("NON è una bomba");
                 //se non è una bomba il contatore delle celle viene decrementato
@@ -249,15 +256,16 @@ play_Btn.addEventListener("click", function () {
         bombs = generateArrayOfRandomNumber(1, totalCells_Number, bombsNumber);
         console.log("bombs", bombs);
 
-
-
         generateGrid(userLevelChoice, ".col-10");
+
+        /* for(i=1; i<totalCells_Number; i++){
+        
+        } */
     }
+
 });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                    PARTE 2                                                                   //
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 /* 
 function checkElement() {
@@ -342,25 +350,6 @@ function generateArrayOfRandomNumber(minNumber, maxNumber, arrayLenghtNumber) {
 
 
 
-
-//dentro al play button che genera la griglia in base al valore della select raccolto:
-///assegno il risultato della funzione all'array globale undefined bombe bombs_list = generate random number array (1, totalCells_Number, 16);
-//funzione generica find element (array da controllare(bombs))
-//che scateno al clic sulle singole celle cell.add event listner (click, find element) se si aggiungi classe magica bomba
-
-//aggiungere un contatore esterno che si aggiorna nella funzine click cell solo se non è bomb e che a fine partita comunichi attraverso funzioni di calcolo il risultato al giocatore (in base a quante caselle fatte e quante mancanti valutazione soggettiva. se le ha fatte tutte mega premio);
-
-
 //__________________
 //disattivare il click sulle altre celle se se ne becca una con la bomba (return? oppure rimozione di add event listner da tutte le altre(comprese quelle già fatte))
 //scopire tutte le bombe nascoste se perdi
-
-
-
-
-/* bombs = generateArrayOfRandomNumber(1,5 ,16 );
-console.log("bombs", bombs)
- */
-/* correzioni */
-
-//correzione allinterno della funzione genera griglia, cell.addevent listner scatena la funzione controllo se bomba
