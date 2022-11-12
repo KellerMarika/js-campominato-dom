@@ -29,6 +29,10 @@ let container_El
 //elemento contenitore del punteggio finale
 let scoreContainer_El
 
+//2 array
+let allCells = [];
+
+let allBombCells = [];
 
 /*** PLAY BTN *******************************/
 
@@ -110,8 +114,8 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
         //l'ultimo argomento è obbligatorio ma inutile visto che aggiungo il data set
         const cell_El = createElement("div", "cell", i + 1);
         cell_El.dataset.cell = i + 1
-        //ora determino le dimensioni dell'elemento grazie ad un calcolo basato sul primo argomento fornito alla funzione. poi lo assegno dando uno style inlinea ad ogni elemento:
-        //calc = 100% (larghezza container) / (diviso) rowCells_Number (numero di celle volute per riga)
+
+
 
         //le proprietà in js sono tradotte da kebab-case a camel-case
         cell_El.style.flexBasis = `calc(100% / ${rowCells_Number}`;
@@ -121,9 +125,21 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
         /* INVOCARE UNA FUNZIONE CHE DICHIARO ALL'ESTERNO ALLEGGERISCE IL CODICE (LE FUNZIONI VENGONO RACCOLTE E ANALIZZATE PRIMA DAL SISTEMA, ASSIEME ALLE VARIABILI*/
 
         cell_El.addEventListener("click", checkBomb);
-        /* 
-                console.log( checkBomb (), "partita finita"); */
-        //adesso stampo la cel sull'html. 
+
+
+        /* duplico l'elemento cell_element in modo da poterne inserire una copia identica in ciascuno dei seguenti array */
+        cell_El_clone = cell_El.cloneNode()
+        //array di tutte le celle
+        allCells.push(cell_El_clone);
+
+        if (bombs.includes(+cell_El.dataset.cell)) {
+
+            //array delle celle con bomba
+
+            allBombCells.push(cell_El);
+            // console.log(allBombCells, "all bombs");
+        }
+
         grid_El.append(cell_El);
         //solo alla fine la griglia così completata diventa visibile
         grid_El.classList.remove("d-none");
@@ -180,6 +196,31 @@ function checkBomb() {
     //se il valore di userscore viene aggiornato in funzione e non è più undefined
     if (userScore !== undefined) {
         alert("PARTITA FINITA");
+
+
+
+        /* WHILE IN FOR (un ciclo, mille magie) */
+        for (ii = 0; ii < totalCells_Number; ii++){
+
+
+            while(ii<allBombCells.length){
+                  //creo un immagine bomba di bomba inesplosa  ad ogni ciclo e la inserisco delle cell che sono bombe
+            const hiddenBomb_Img = createImage("/img/bomb-hidden.gif", "hidden-bomb", "hidden-bomb");
+            console.log(hiddenBomb_Img);
+
+            //azioni sulla cella:
+            allBombCells[ii].append(hiddenBomb_Img);
+            allBombCells[ii].classList.add("active");
+            //ma aggiungo la classe bomb come disclaimer.
+            allBombCells[ii].classList.add("bomb");
+            console.log(allBombCells[ii]);
+            ii++
+            }
+
+
+        }
+        //DEVO DISABILITARE LE CELLE_______________________________________________________________________  */
+
         //funzione che crea il contenitore che mostra il punteggio personalizzato nelle if:
         generateScoreContainer();
         //se <del massimo punteggio ha perso
@@ -191,8 +232,7 @@ function checkBomb() {
             scoreTitle_El.innerText = "COMPLETATO!!!"
             scoreValue_El.prepend("Hai VINTO!");
         }
-    }return
-
+    } return
 
 }
 
@@ -215,6 +255,11 @@ function generateScoreContainer() {
     container_El.append(scoreContainer_El);
 
 }
+
+
+/* FUNZIONE CREA IMMAGINI */
+
+
 
 /**FUNZIONE RINTRACCIA ELEMENTO
 * questa funzione controlla se all'interno di un array è presente il valore n ricercato (correlazione di inclusione) e ritorna vero o falso
@@ -298,7 +343,22 @@ function createElement(tagEl, class1, class2) {
     return created_El
 }
 
+/****  FUNZIONE CREA IMMAGINI *************************************/
+/**crea un elemento di tipo Img per cui bisogna specificare src alt e classe Css
+ * 
+ * @param {string} srcURL dovrebbe essere l'indirizzo URL assoluto o relativo dell'immagine
+ * @param {string} altDescription dovrebbe essere la descrizione dell'immagine (disabilità-- SEO++)
+ * @param {string} class1 una classe CSS
+ *@returns <img src=srcURL alt=altDescription class=class1>
+ */
+function createImage(srcURL, altDescription, class1) {
 
+    const created_Img = document.createElement("img");
+    created_Img.src = srcURL;
+    created_Img.alt = altDescription;
+    created_Img.classList.add(class1);
+    return created_Img
+}
 
 
 
@@ -311,3 +371,17 @@ function createElement(tagEl, class1, class2) {
 
 
 //TO FIX_______________________________________le celle già cliccate non devono poter essere cliccate 2 volte
+
+
+/* const bomb_El = document.createElement("img");//___________________________________devo farmi un create img
+//con una gif anuimata di una bomba che esplode come src
+bomb_El.src = "/img/bomb-hidden.gif";
+bomb_El.alt = "bomb";
+
+//azioni sulla cella:
+cell_El.append(bomb_El);
+cell_El.classList.add("active");
+//ma aggiungo la classe bomb come disclaimer.
+cell_El.classList.add("bomb");
+
+ */
