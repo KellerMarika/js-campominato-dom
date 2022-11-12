@@ -34,6 +34,7 @@ let allCells = [];
 
 let allBombCells = [];
 
+
 /*** PLAY BTN *******************************/
 
 play_Btn.addEventListener("click", function () {
@@ -150,6 +151,8 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
 
 /* FUNZIONE SUPREMA CONTROLLO PUNTEGGIO */
 function checkBomb() {
+    
+
     //variabile che racchiude il valore del dataset della cella cliccata
     nCell = +this.dataset.cell;
     /*     // FUNZIONE CHECK ELEMENT mette in correlazione bombs e dataset cella e ritorna un v booleano
@@ -197,24 +200,26 @@ function checkBomb() {
     if (userScore !== undefined) {
         alert("PARTITA FINITA");
 
-
-
         /* WHILE IN FOR (un ciclo, mille magie) */
-        for (ii = 0; ii < totalCells_Number; ii++){
+        for (ii = 0; ii < totalCells_Number; ii++) {    
+            
+           // allCells.removeEventListner("click", checkBomb, false);
+            //dovrebbe rimuovere la funzione click checkbomb ma non funzione_____________
 
+                  while (ii < allBombCells.length) {
+                //creo un immagine bomba di bomba inesplosa  ad ogni ciclo e la inserisco delle cell che sono bombe
+                const hiddenBomb_Img = createImage("/img/bomb-hidden.gif", "hidden-bomb", "hidden-bomb");
+                console.log(hiddenBomb_Img);
+                
 
-            while(ii<allBombCells.length){
-                  //creo un immagine bomba di bomba inesplosa  ad ogni ciclo e la inserisco delle cell che sono bombe
-            const hiddenBomb_Img = createImage("/img/bomb-hidden.gif", "hidden-bomb", "hidden-bomb");
-            console.log(hiddenBomb_Img);
-
-            //azioni sulla cella:
-            allBombCells[ii].append(hiddenBomb_Img);
-            allBombCells[ii].classList.add("active");
-            //ma aggiungo la classe bomb come disclaimer.
-            allBombCells[ii].classList.add("bomb");
-            console.log(allBombCells[ii]);
-            ii++
+                //azioni sulla cella:
+                allBombCells[ii].append(hiddenBomb_Img);
+                allBombCells[ii].classList.add("active");
+                //ma aggiungo la classe bomb come disclaimer.
+                allBombCells[ii].classList.add("bomb");
+                console.log(allBombCells[ii]);
+                ii++
+           
             }
 
 
@@ -232,10 +237,10 @@ function checkBomb() {
             scoreTitle_El.innerText = "COMPLETATO!!!"
             scoreValue_El.prepend("Hai VINTO!");
         }
-    } return
+    } 
 
-}
-
+} 
+/* dove caspita me lo devo mettere il return per bloccare le celle?????! */
 
 /****  FUNZIONE SHOW RESULT **********************************************************/
 
@@ -366,22 +371,6 @@ function createImage(srcURL, altDescription, class1) {
 
 
 //__________________
-//disattivare il click sulle altre celle se se ne becca una con la bomba (return? oppure rimozione di add event listner da tutte le altre(comprese quelle già fatte))
-//scopire tutte le bombe nascoste se perdi
-
+//disattivare il click sulle altre celle se se ne becca una con la bomba (return? si ma dove?!) oppure rimozione di add event listner da tutte le cell(non funziona?!))
 
 //TO FIX_______________________________________le celle già cliccate non devono poter essere cliccate 2 volte
-
-
-/* const bomb_El = document.createElement("img");//___________________________________devo farmi un create img
-//con una gif anuimata di una bomba che esplode come src
-bomb_El.src = "/img/bomb-hidden.gif";
-bomb_El.alt = "bomb";
-
-//azioni sulla cella:
-cell_El.append(bomb_El);
-cell_El.classList.add("active");
-//ma aggiungo la classe bomb come disclaimer.
-cell_El.classList.add("bomb");
-
- */
