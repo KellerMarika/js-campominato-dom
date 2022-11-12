@@ -25,6 +25,7 @@ let container_El
 //elemento contenitore del punteggio finale
 let scoreContainer_El
 
+
 /************* FUNZIONE GENERA GRIGLIA *****************/
 /**
  * funzione che utilizza il numero inserito come primo argomento per costuire una griglia quadrata
@@ -44,19 +45,19 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
     //creo la griglia in cui inserirò le celle
 
 
-    
-  
+
+
     //classe nominale parlante: ti dice già quante celle porta per riga (come bootstrap row-cols-x)
     const grid_ElName = `grid-cells-${rowCells_Number}`;
 
-/* invoco funzione crea elemento per generare la griglia*/
+    /* invoco funzione crea elemento per generare la griglia*/
 
-    const grid_El = createElement("div",grid_ElName, "my_b-inset");
+    const grid_El = createElement("div", grid_ElName, "my_b-inset");
     //aggiungo la classe d-flex perchè funzioni correttamente il flexbasis degli elementi figli
     grid_El.style.display = "flex"
     grid_El.style.flexWrap = "wrap"
-  /* reset */
-  grid_El.classList.add("d-none");
+    /* reset */
+    grid_El.classList.add("d-none");
 
     //stampo la grid nell'elemento conenitore
     container_El.append(grid_El);
@@ -74,9 +75,9 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
         //create piuttosto di innerHTML perchè così posso aggiungere degli eventi relativi all'elemento creato
         //creo la singola cella
 
-/* invoco funzione crea elemento per generare la cella*/
-//l'ultimo argomento è obbligatorio ma inutile visto che aggiungo il data set
-        const cell_El = createElement("div","cell", i+1);
+        /* invoco funzione crea elemento per generare la cella*/
+        //l'ultimo argomento è obbligatorio ma inutile visto che aggiungo il data set
+        const cell_El = createElement("div", "cell", i + 1);
         cell_El.dataset.cell = i + 1
         //ora determino le dimensioni dell'elemento grazie ad un calcolo basato sul primo argomento fornito alla funzione. poi lo assegno dando uno style inlinea ad ogni elemento:
         //calc = 100% (larghezza container) / (diviso) rowCells_Number (numero di celle volute per riga)
@@ -89,7 +90,7 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
 
         /* INVOCARE UNA FUNZIONE CHE DICHIARO ALL'ESTERNO ALLEGGERISCE IL CODICE (LE FUNZIONI VENGONO RACCOLTE E ANALIZZATE PRIMA DAL SISTEMA, ASSIEME ALLE VARIABILI*/
 
-        cell_El.addEventListener("click", checkElement);
+        cell_El.addEventListener("click", x);
         //adesso stampo la cel sull'html. 
         grid_El.append(cell_El);
         //solo alla fine la griglia così completata diventa visibile
@@ -121,55 +122,117 @@ play_Btn.addEventListener("click", function () {
         /* invoco la funzione genera un array random di bombe */
         bombs = generateArrayOfRandomNumber(1, totalCells_Number, bombsNumber);
         console.log("bombs", bombs);
-        let maxScore = totalCells_Number - bombs.length;
-
         /* invoco la funzione genera griglia */
         generateGrid(userLevelChoice, ".col-10");
-        return bombs
+
+
+        /* QUESTO VALORE ESCE DALLA FUNZIONE */
+        maxScore = totalCells_Number - bombsNumber;
+        //max score globale viene così aggiornata, e verrà utilizzata nel clickcell per stabilire il punteggio
+        return maxScore
     }
 });
 
-function checkElement() {
-    if (bombs.includes(+this.dataset.cell)) {
 
-        console.log("è una bomba");
-        //creo un'immagine
-        const bomb_El = document.createElement("img");
-        //con una gif anuimata di una bomba che esplode come src
-        bomb_El.src = "/img/bomb.gif";
-        bomb_El.alt = "bomb";
-        //la inserisco all'interno della cella esplosa
-        this.append(bomb_El);
-        //diventa active perchè voglio che cambi background come le altre
-        this.classList.add("active");
-        //ma aggiungo la classe bomb come disclaimer.
-        this.classList.add("bomb");
-        let score = cellClickcounter
 
-        scoreTitle_El.innerText = "BOMBA!!!"
-        scoreValue_El = `Hai perso, punteggio: ${cellClickcounter} / ${totalCells_Number - bombsNumber}`
+/* FUNZIONE SUPREMA CONTROLLO PUNTEGGIO */
+function x() {
+    //variabile che racchiude il valore del dataset della cella cliccata
+    nCell = +this.dataset.cell;
+    // FUNZIONE CHECK ELEMENT mette in correlazione bombs e dataset cella e ritorna un v booleano
+    let isBomb = (checkElement(bombs, nCell));
+    console.log(nCell, isBomb);
+    console.log(maxScore);
 
-        scoreContainer_El.classList.remove("d-none");
-        //return score
+    function scoreCount() {
+        if (isBomb === true) {
 
-    } else {
-        console.log("NON è una bomba");
-        //se non è una bomba il contatore delle celle viene decrementato
-        cellClickcounter++
+            console.log("è una bomba HAI PERSO");
+            //creo un immagine che inserisco nella cella esplosa
+            const bomb_El = document.createElement("img");//___________________________________devo farmi un create img
+            //con una gif anuimata di una bomba che esplode come src
+            bomb_El.src = "/img/bomb.gif";
+            bomb_El.alt = "bomb";
 
-        console.log(cellClickcounter);
-        this.classList.add("active");
+            //azioni sulla cella:
+            this.append(bomb_El);
+            this.classList.add("active");
+            //ma aggiungo la classe bomb come disclaimer.
+            this.classList.add("bomb");
+            //let score = cellClickcounter
+       
+            console.log(cellClickcounter, "punteggio bomba trovata");
+            return cellClickcounter
 
-        if (cellClickcounter === maxScore) {
-            let score = cellClickcounter
+        } else {
+            console.log("NON è una bomba");
+            //se non è una bomba il contatore delle celle viene decrementato
+            cellClickcounter++
 
-            scoreTitle_El.innerText = "COMPLETATO!!"
-            scoreValue_El = `Hai VINTO! punteggio: ${cellClickcounter} / ${totalCells_Number - bombsNumber}`
+            console.log(cellClickcounter);
+            this.classList.add("active");
 
-            scoreContainer_El.classList.remove("d-none");
-            //return score
+            if (cellClickcounter === maxScore) {
+                
+                console.log("HAI VINTO!");
+                return cellClickcounter
+            }
         }
     }
+
+    let userScore= scoreCount()
+    console.log(userScore, "userscore");
+}
+
+
+//function checkElement() {
+
+/* 
+if (bombs.includes(+this.dataset.cell)) {
+ 
+    const bomb_El = document.createElement("img");
+    //con una gif anuimata di una bomba che esplode come src
+    bomb_El.src = "/img/bomb.gif";
+    bomb_El.alt = "bomb";
+    //la inserisco all'interno della cella esplosa
+    this.append(bomb_El);
+    //diventa active perchè voglio che cambi background come le altre
+    this.classList.add("active");
+    //ma aggiungo la classe bomb come disclaimer.
+    this.classList.add("bomb");
+    let score = cellClickcounter
+ 
+    scoreTitle_El.innerText = "BOMBA!!!"
+    scoreValue_El = `Hai perso, punteggio: ${cellClickcounter} / ${totalCells_Number - bombsNumber}`
+ 
+    scoreContainer_El.classList.remove("d-none");
+    //return score 
+ 
+} else {
+    console.log("NON è una bomba");
+    //se non è una bomba il contatore delle celle viene decrementato
+    cellClickcounter++
+ 
+    console.log(cellClickcounter);
+    this.classList.add("active");
+ 
+    if (cellClickcounter === maxScore) {
+        let score = cellClickcounter
+ 
+        scoreTitle_El.innerText = "COMPLETATO!!"
+        scoreValue_El = `Hai VINTO! punteggio: ${cellClickcounter} / ${maxScore}`
+ 
+        scoreContainer_El.classList.remove("d-none");
+        //return score
+    }
+}
+ 
+ 
+ 
+ */
+
+function showResult() {
+
 
     scoreContainer_El = createElement("div", "score-container", "d-none");
     console.log(scoreContainer_El);
@@ -177,15 +240,29 @@ function checkElement() {
     console.log(scoreTitle_El);
     scoreValue_El = createElement("p", "score-subtitle", "percentage-value");
     console.log(scoreValue_El);
-
-
-    /* creo una variabile e le assegno il valore di una funzione che crea un elemento html (punteggio) */
-    //  scoreContainer_El = generateScoreContainer(); __________________________________________*/
-    /* la tampo sull'html */
-    // container_El.append(scoreContainer_El);___________________________________________
-    //console.log(container_El);
-    //console.log(generateScoreContainer());
 }
+
+/**FUNZIONE RINTRACCIA ELEMENTO
+* questa funzione controlla se all'interno di un array è presente il valore n ricercato (correlazione di inclusione) e ritorna vero o falso
+* @param {array} array 
+* @param {number || string} n utile con this.dataset.x!
+* @returns true o false
+*/
+function checkElement(array, n) {
+    if (array.includes(n)) {
+        return true
+    } else {
+        return false
+    }
+}
+
+/* creo una variabile e le assegno il valore di una funzione che crea un elemento html (punteggio) */
+//  scoreContainer_El = generateScoreContainer(); __________________________________________*/
+/* la tampo sull'html */
+// container_El.append(scoreContainer_El);___________________________________________
+//console.log(container_El);
+//console.log(generateScoreContainer());
+//}____________________________________________
 
 /************* FUNZIONE GENERA NUMERI RANDOM *****************/
 /**
