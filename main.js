@@ -25,7 +25,8 @@ let container_El
 //elemento contenitore del punteggio finale
 let scoreContainer_El
 
-
+let userScore
+console.log(userScore);
 /************* FUNZIONE GENERA GRIGLIA *****************/
 /**
  * funzione che utilizza il numero inserito come primo argomento per costuire una griglia quadrata
@@ -90,7 +91,9 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
 
         /* INVOCARE UNA FUNZIONE CHE DICHIARO ALL'ESTERNO ALLEGGERISCE IL CODICE (LE FUNZIONI VENGONO RACCOLTE E ANALIZZATE PRIMA DAL SISTEMA, ASSIEME ALLE VARIABILI*/
 
-        cell_El.addEventListener("click", x);
+        cell_El.addEventListener("click", checkBomb);
+/* 
+        console.log( checkBomb (), "partita finita"); */
         //adesso stampo la cel sull'html. 
         grid_El.append(cell_El);
         //solo alla fine la griglia così completata diventa visibile
@@ -136,60 +139,58 @@ play_Btn.addEventListener("click", function () {
 
 
 /* FUNZIONE SUPREMA CONTROLLO PUNTEGGIO */
-function x() {
+function checkBomb() {
     //variabile che racchiude il valore del dataset della cella cliccata
     nCell = +this.dataset.cell;
-    // FUNZIONE CHECK ELEMENT mette in correlazione bombs e dataset cella e ritorna un v booleano
-    let isBomb = (checkElement(bombs, nCell));
-    console.log(nCell, isBomb);
-    console.log(maxScore);
+    /*     // FUNZIONE CHECK ELEMENT mette in correlazione bombs e dataset cella e ritorna un v booleano
+        let isBomb = (checkElement(bombs, nCell));
+        console.log(nCell, isBomb);
+        console.log(maxScore)
+     */
+    if (bombs.includes(nCell)) {
 
-    function scoreCount() {
-        if (isBomb === true) {
+        console.log("è una bomba HAI PERSO");
+        //creo un immagine che inserisco nella cella esplosa
+        const bomb_El = document.createElement("img");//___________________________________devo farmi un create img
+        //con una gif anuimata di una bomba che esplode come src
+        bomb_El.src = "/img/bomb.gif";
+        bomb_El.alt = "bomb";
 
-            console.log("è una bomba HAI PERSO");
-            //creo un immagine che inserisco nella cella esplosa
-            const bomb_El = document.createElement("img");//___________________________________devo farmi un create img
-            //con una gif anuimata di una bomba che esplode come src
-            bomb_El.src = "/img/bomb.gif";
-            bomb_El.alt = "bomb";
-
-            //azioni sulla cella:
-            this.append(bomb_El);
-            this.classList.add("active");
-            //ma aggiungo la classe bomb come disclaimer.
-            this.classList.add("bomb");
-            //let score = cellClickcounter
+        //azioni sulla cella:
+        this.append(bomb_El);
+        this.classList.add("active");
+        //ma aggiungo la classe bomb come disclaimer.
+        this.classList.add("bomb");
+        //let score = cellClickcounter
        
-            console.log(cellClickcounter, "punteggio bomba trovata");
-            return cellClickcounter
+        userScore=cellClickcounter
+        console.log("HAI perso! bomba!! userscore= ", userScore, "cellclickcounter=",cellClickcounter);
+        return userScore
 
-        } else {
-            console.log("NON è una bomba");
-            //se non è una bomba il contatore delle celle viene decrementato
-            cellClickcounter++
+    } else {
+        console.log("NON è una bomba");
+        //se non è una bomba il contatore delle celle viene decrementato
+        cellClickcounter++
 
-            console.log(cellClickcounter);
-            this.classList.add("active");
+        console.log(cellClickcounter);
+        this.classList.add("active");
 
-            if (cellClickcounter === maxScore) {
-                
-                console.log("HAI VINTO!");
-                return cellClickcounter
-            }
+        if (cellClickcounter === maxScore) {
+       
+            userScore=cellClickcounter
+            console.log("HAI VINTO! userscore=max score= ", userScore, "cellclickcounter=",cellClickcounter);
+            return userScore
         }
     }
-
-    let userScore= scoreCount()
-    console.log(userScore, "userscore");
 }
+
 
 
 //function checkElement() {
 
 /* 
 if (bombs.includes(+this.dataset.cell)) {
- 
+
     const bomb_El = document.createElement("img");
     //con una gif anuimata di una bomba che esplode come src
     bomb_El.src = "/img/bomb.gif";
@@ -201,34 +202,34 @@ if (bombs.includes(+this.dataset.cell)) {
     //ma aggiungo la classe bomb come disclaimer.
     this.classList.add("bomb");
     let score = cellClickcounter
- 
+
     scoreTitle_El.innerText = "BOMBA!!!"
     scoreValue_El = `Hai perso, punteggio: ${cellClickcounter} / ${totalCells_Number - bombsNumber}`
- 
+
     scoreContainer_El.classList.remove("d-none");
     //return score 
- 
+
 } else {
     console.log("NON è una bomba");
     //se non è una bomba il contatore delle celle viene decrementato
     cellClickcounter++
- 
+
     console.log(cellClickcounter);
     this.classList.add("active");
- 
+
     if (cellClickcounter === maxScore) {
         let score = cellClickcounter
- 
+
         scoreTitle_El.innerText = "COMPLETATO!!"
         scoreValue_El = `Hai VINTO! punteggio: ${cellClickcounter} / ${maxScore}`
- 
+
         scoreContainer_El.classList.remove("d-none");
         //return score
     }
 }
- 
- 
- 
+
+
+
  */
 
 function showResult() {
