@@ -42,18 +42,21 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
     container_El.innerHTML = ""
     /* Cosa: */
     //creo la griglia in cui inserirò le celle
-    const grid_El = document.createElement("div");
-    //console.log(grid_El);
-    /* reset */
-    grid_El.classList.add("d-none");
+
+
+    
+  
     //classe nominale parlante: ti dice già quante celle porta per riga (come bootstrap row-cols-x)
     const grid_ElName = `grid-cells-${rowCells_Number}`;
-    grid_El.classList.add(grid_ElName);
-    //aggiungo la classe d-flex perchè funzioni correttamente il flexbasis degli elementi figli
 
+/* invoco funzione crea elemento per generare la griglia*/
+
+    const grid_El = createElement("div",grid_ElName, "my_b-inset");
+    //aggiungo la classe d-flex perchè funzioni correttamente il flexbasis degli elementi figli
     grid_El.style.display = "flex"
     grid_El.style.flexWrap = "wrap"
-    grid_El.classList.add("my_b-inset")
+  /* reset */
+  grid_El.classList.add("d-none");
 
     //stampo la grid nell'elemento conenitore
     container_El.append(grid_El);
@@ -62,22 +65,19 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
     // console.log("totalCells_Number", totalCells_Number);
 
 
-    //numero di celle che l'utente deve cliccare per vincere il gioco
-    let score  /* (totalCells_Number - bombsNumber) */
+    //numero di celle che l'utente deve cliccare per vincere il gioco____________________________________________
+    let winScore = totalCells_Number - bombsNumber
 
     //finchè i non è uguale al numero di celle totali da creare
     i = 0
     while (i < totalCells_Number) {
         //create piuttosto di innerHTML perchè così posso aggiungere degli eventi relativi all'elemento creato
         //creo la singola cella
-        const cell_El = document.createElement("div");
-        //console.log(cell_El);
-        //creo classe nominale 
-        const cell_ElName = "cell"
-        //ggiungo la classe cell-ElName all'elemento creato sopra cell_El
-        cell_El.classList.add(cell_ElName);
-        cell_El.dataset.cell = i + 1
 
+/* invoco funzione crea elemento per generare la cella*/
+//l'ultimo argomento è obbligatorio ma inutile visto che aggiungo il data set
+        const cell_El = createElement("div","cell", i+1);
+        cell_El.dataset.cell = i + 1
         //ora determino le dimensioni dell'elemento grazie ad un calcolo basato sul primo argomento fornito alla funzione. poi lo assegno dando uno style inlinea ad ogni elemento:
         //calc = 100% (larghezza container) / (diviso) rowCells_Number (numero di celle volute per riga)
 
@@ -94,6 +94,7 @@ function generateGrid(rowCells_Number, container_SelectorCSS) {
         grid_El.append(cell_El);
         //solo alla fine la griglia così completata diventa visibile
         grid_El.classList.remove("d-none");
+
         i++
     }
 }
@@ -146,7 +147,7 @@ function checkElement() {
         let score = cellClickcounter
 
         scoreTitle_El.innerText = "BOMBA!!!"
-        scorePoint_El.innerHTML = `Hai perso, punteggio: ${cellClickcounter} / ${totalCells_Number - bombsNumber}`
+        scoreValue_El = `Hai perso, punteggio: ${cellClickcounter} / ${totalCells_Number - bombsNumber}`
 
         scoreContainer_El.classList.remove("d-none");
         //return score
@@ -163,7 +164,7 @@ function checkElement() {
             let score = cellClickcounter
 
             scoreTitle_El.innerText = "COMPLETATO!!"
-            scorePoint_El.innerHTML = `Hai VINTO! punteggio: ${cellClickcounter} / ${totalCells_Number - bombsNumber}`
+            scoreValue_El = `Hai VINTO! punteggio: ${cellClickcounter} / ${totalCells_Number - bombsNumber}`
 
             scoreContainer_El.classList.remove("d-none");
             //return score
