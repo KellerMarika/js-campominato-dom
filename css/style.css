@@ -64,7 +64,7 @@ h2.title{
 /***** GRID **********************************************/
 
 [class*="grid-cells-"] {
-    background-image: url(img/grid-bg.jfif);
+    background-image: url(../img/grid-bg.jfif);
     margin-bottom: 100px;
     position: relative;
 }
@@ -79,7 +79,7 @@ h2.title{
 }
 
 .cell.active {
-    background-image: url(img/cell-click-bg.jpg);
+    background-image: url(../img/cell-click-bg.jpg);
     background-size: cover;
     border: none
 }

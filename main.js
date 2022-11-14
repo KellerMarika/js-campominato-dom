@@ -166,7 +166,7 @@ function checkBomb() {
         //creo un immagine che inserisco nella cella esplosa
         const bomb_El = document.createElement("img");//___________________________________devo farmi un create img
         //con una gif anuimata di una bomba che esplode come src
-        bomb_El.src = "img/bomb.gif";
+        bomb_El.src = "../img/bomb.gif";
         bomb_El.alt = "bomb";
 
         //azioni sulla cella:
@@ -208,7 +208,7 @@ function checkBomb() {
 
                   while (ii < allBombCells.length) {
                 //creo un immagine bomba di bomba inesplosa  ad ogni ciclo e la inserisco delle cell che sono bombe
-                const hiddenBomb_Img = createImage("img/bomb-hidden.gif", "hidden-bomb", "hidden-bomb");
+                const hiddenBomb_Img = createImage("../img/bomb-hidden.gif", "hidden-bomb", "hidden-bomb");
                 console.log(hiddenBomb_Img);
                 
 
